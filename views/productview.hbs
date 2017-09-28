@@ -1,0 +1,33 @@
+<select>
+<option val="x">BASIC Product Type </option>
+<option val="y">VARIANT Product Type y</option>
+<option val="z">APPAREL Product Type z</option>
+</select>
+<p>Select a product and view the data tree. No preview built.</p>
+<p>Basic products are specified to contain:</p>
+<ul><li>id</li>
+<li>title</li>
+<li>description</li>
+<li>link</li>
+<li>image_link</li>
+<li>availability</li>
+<li>price</li>
+<li>condition</li>
+<li>brand</li></ul>
+<p>And... If <strong>gtin exists</strong> use gtin. If gtin doesn't exist, but <strong>mpn</strong> exists use mpn. If no gtin or mpn exists use <strong>identifier_exists</strong> set to <strong>no</strong>. Otherwise set to yes.</p>
+<p id="showme">Header information</p>
+<ul id="headers">
+  {{#each mheaders}}
+  <li>{{@key}}: {{this}}</li>
+  {{/each}}
+</ul>
+<table id="mydatas">
+  {{#each data}}
+  <tr><th>{{@key}}</th></tr>
+  <tr id={{@key}}>{{#each this}}<td>{{@key}}</td><td>{{this}}</td></tr>{{/each}}
+  {{/each}}
+</table>
+<script>
+function onload() {
+}
+</script>

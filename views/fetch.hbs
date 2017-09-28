@@ -1,0 +1,96 @@
+<input type="hidden" id="fetchme">
+<input list="searchattr" id="searchinput" placeholder="Enter attribute here">
+<p id="demo"></p>
+<div id="mydata">
+</div>
+<datalist id="searchattr">
+{{#each data}}
+<option value="{{@key}}">
+{{/each}}
+</datalist>
+<style>
+#searchinput {
+  border: none;
+  border-bottom: 1px solid #333;
+}
+#searchinput.good {
+  border-bottom: 2px inset rgba(50,200,90,.9);
+}
+#searchinput.bad {
+  border-bottom: 2px inset rgba(249, 176, 0, 0.9);
+}
+</style>
+<script>
+function onload() {
+var search = document.getElementById("fetchme");
+var searchList = document.getElementById("searchinput");
+var listAttr = document.getElementById("searchattr").children;
+search.addEventListener("change", updateView);
+function updateView() {
+  if (search.value.length >= 2) {
+    //console.log(search.value + " entered. Executing search.");
+        var theUrl = "/query/?q=" + search.value;
+        fetch(theUrl)
+        .then(function(response){
+          return response.json();
+        })
+        .then(function(data){
+          updateDemo(data);
+        })
+        .catch(function(){
+          console.log("Error fetching data.");
+        })
+      }
+    }
+searchList.oninput = function() {
+  updateSearch();
+}
+function updateSearch() {
+  if (searchList.value.length >= 2) {
+    updateColor();
+    for (i = 0; i < listAttr.length; i++) {
+      if (searchList.value === listAttr[i].value) {
+        search.value = searchList.value;
+        updateView();
+      }
+    }
+  }
+}
+  function updateDemo(indata) {
+    //console.log("Updated data.");
+    var myObject = indata;
+    var myKeys = myObject["keys"];
+    // What it is; the attribute title
+    //console.log(myObject["attribute"]);
+    // Keys from the attribute
+    //console.log(myObject["keys"]["required"]);
+    //console.log(myObject["keys"]);
+    //document.getElementById("demo").innerHTML = JSON.stringify(myObject["keys"]);
+    document.getElementById("mydata").innerHTML = "";
+    //console.log(typeof myKeys);
+    if (typeof myKeys == "object") {
+      updateColor("success");
+      let newH2 = document.createElement("h2");
+      let newAttributeName = document.createTextNode(myObject["attribute"]);
+      newH2.appendChild(newAttributeName);
+      document.getElementById("mydata").appendChild(newH2);
+      Object.keys(myKeys).forEach(key => {
+        //console.log(key);          // the name of the current key.
+        //console.log(myKeys[key]);   // the value of the current key.
+        let newParagraph = document.createElement("p");
+        let newTextNode = document.createTextNode(key + ": " + myKeys[key]);
+        newParagraph.appendChild(newTextNode);
+        document.getElementById("mydata").appendChild(newParagraph);
+    });
+    }
+  }
+  function updateColor(status) {
+    if (status == "success") {
+      document.getElementById("searchinput").setAttribute("class", "good");
+    }
+    else {
+      document.getElementById("searchinput").setAttribute("class", "bad");
+    }
+  }
+}
+</script>

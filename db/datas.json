@@ -1,0 +1,282 @@
+{
+  "id": {
+    "required": true,
+    "type": "alphanumeric string",
+    "maxLength": 50,
+    "schemaOrg": "Product.sku",
+    "description": "Use an unique value for each product. Do not change when updating your feed. Only valid unicode characters."
+  },
+  "title": {
+    "required": true,
+    "type": "string",
+    "maxLength": 150,
+    "schemaOrg": "Product.name",
+    "description": "Accurately describe your product and match the product title from the product page (URL)."
+  },
+  "description": {
+    "required": true,
+    "type": "string",
+    "maxLength": 5000,
+    "schemaOrg": "Product.description",
+    "description": "Describe your product and DO NOT include promotional text, DO NOT use all capital letters. Only information about the product itself. Usage, advantages and specifications are recommended."
+  },
+  "link": {
+    "required": true,
+    "type": "url-encoded string",
+    "maxLength": 2000,
+    "schemaOrg": "Offer.url",
+    "description": "Use the product link from your verified domain name. Use either https or http. Use encoded URL in accordance with RFC 2396 or RFC 1738. Tracking redirects are allowed."
+  },
+  "image_link": {
+    "required": true,
+    "type": "string",
+    "maxLength": 2000,
+    "schemaOrg": "Product.image",
+    "description": "Link to the main image of your product. Recommended size of at least 250 x 250 pixels. Must be crawlable by Googlebot and Googlebot-image. Maximum file size of 16MB."
+  },
+  "additional_image_link": {
+    "required": false,
+    "type": "accepts comma-separated values, url-encoded strings",
+    "maxLength": 2000,
+    "schemaOrg": "",
+    "description": "Link to up to 10 images of your product. Use comma for separating URLs and be sure not to decode the separator (as %2C)."
+  },
+  "mobile_link": {
+    "required": false,
+    "type": "url-encoded string",
+    "maxLength": 2000,
+    "schemaOrg": "",
+    "description": "Use the product link from your mobile site, if you have a separate site for mobile traffic. Same requirement as the link attribute."
+  },
+  "availability": {
+    "required": true,
+    "type": "accepts value, string",
+    "maxLength": 12,
+    "schemaOrg": "Offer.availability",
+    "description": "Only accepts three values: in stock, out of stock and preorder. Product availability must match the availability at the landning page."
+  },
+  "availability_date": {
+    "required": false,
+    "type": "string",
+    "maxLength": 25,
+    "schemaOrg": "Offer.availabilityStarts",
+    "description": "Use only if availability is set to preorder. Accepts ISO 8601 date input such as YYYY-MM-DD (short), YY-MM-DDThh:mm:ss (long) and YYYY-MM-DDThh:mm:ssZ (with timezone)."
+  },
+  "expiration_date": {
+    "required": false,
+    "type": "string",
+    "maxLength": 25,
+    "schemaOrg": "",
+    "description": "Use a date less than 30 days in the future. Accepts ISO 8601 date input. A valid value is 2016-07-11T11:07:31​+0100 (UTC+1)."
+  },
+  "price": {
+    "required": true,
+    "type": "object, {\"value\":\"00.00\", \"currency\":\"string\"}",
+    "maxLength": "",
+    "schemaOrg": "Offer.priceSpecification",
+    "description": "Use JSON formatted value and currency. See price.value and price.currency for further information regarding the objects. Include tax in the price outside of US, Canada and India."
+  },
+  "price.value": {
+    "required": true,
+    "type": "string",
+    "maxLength": "",
+    "schemaOrg": "",
+    "description": "NOTE: Part of the price object. Not valid in feed as price.value attribute. Supply a valid value, as a string. Such as 15.00."
+  },
+  "price.currency": {
+    "required": true,
+    "type": "string",
+    "maxLength": "",
+    "schemaOrg": "",
+    "description": "NOTE: Part of the price object. Not valid in feed as price.currency attribute. Supply a valid currency (country code), as a string, according to ISO 4217."
+  },
+  "sale_price": {
+    "required": false,
+    "type": "string",
+    "maxLength": "",
+    "schemaOrg": "Offer.priceSpecification",
+    "description": "The sale_price must match the price on the products landning page."
+  },
+  "sale_price_effective_date": {
+    "required": false,
+    "type": "string",
+    "maxLength": 51,
+    "schemaOrg": "Offer.​​price​Specification.​validFrom",
+    "description": "Separate start date and end date with forward slash / (shift+7). ISO 8601 applies to date formatting."
+  },
+  "google_product_category": {
+    "required": true,
+    "type": "accepts value, string OR number",
+    "maxLength": "",
+    "schemaOrg": "",
+    "description": "Not to be confused with the user-friendly category set on the website. Only include ONE google_product_category. Either the full path of the category (Apparel & Accessories > Clothing > Outerwear > Coats & Jackets), or the numerical category ID (371). Search for Google Product Taxonomy for finding specific IDs. Only required for products of 166, 783, 2092."
+  },
+  "product_type": {
+    "required": false,
+    "type": "alphanumeric string",
+    "maxLength": 750,
+    "schemaOrg": "",
+    "description": "Include full category, such as Home > Women > Dresses > Maxi Dresses. Only the first product_type will be used to organize bidding and reporting in AdWords Shopping campaigns."
+  },
+  "brand": {
+    "required": true,
+    "type": "string",
+    "maxLength": 70,
+    "schemaOrg": "Product.brand",
+    "description": "Provide the name of the brand. Only use the store name if you manufacture the product yourself, or the product is white labeled. If you do not have a brand to provide, do NOT provide a value."
+  },
+  "gtin": {
+    "required": true,
+    "type": "string",
+    "maxLength": 50,
+    "schemaOrg": "Product.isbn",
+    "description": "Exclude dashes and spaces. GTIN-8, -12, -13 and -14 are acceptable, as well ISBN for litterature. GTIN is supplied by the manufacturer."
+  },
+  "mpn": {
+    "required": true,
+    "type": "alphanumeric string",
+    "maxLength": 70,
+    "schemaOrg": "Product.mpn",
+    "description": "Only submit MPNs assigned by the manufacturer. Different colors should have different MPNs."
+  },
+  "identifier_exists": {
+    "required": false,
+    "type": "accepts value, string",
+    "maxLength": 3,
+    "schemaOrg": "",
+    "description": "Accepts yes or no. Set to no if the product does NOT have GTIN and brand, or MPN and brand."
+  },
+  "condition": {
+    "required": true,
+    "type": "accepts value, string",
+    "maxLength": 11,
+    "schemaOrg": "Offer.itemCondition",
+    "description": "Accepts new, refurbished or used as item condition. New is only for original, unonpened products."
+  },
+  "adult": {
+    "required": true,
+    "type": "accepts value, string",
+    "maxLength": 3,
+    "schemaOrg": "",
+    "description": "The default value is no. Only submit yes if the product contains nudity or sexually suggestive content."
+  },
+  "age_group": {
+    "required": true,
+    "type": "accepts value, string",
+    "maxLength": 7,
+    "schemaOrg": "Product.audience.suggestedMinAge",
+    "description": "Accepts newborn (90 days), infant (12 months), toddler (5 years), kids (13 years) and adult (teen or older) as value. One value per product. Variants should use same value for item_group_id and differentiate age_group."
+  },
+  "color": {
+    "required": true,
+    "type": "alphanumeric string",
+    "maxLength": 100,
+    "schemaOrg": "Product.color",
+    "description": "Max 40 characters per color. Max 3 colors, separated with forward slash / (shift+7). Supply strings such as Red, Green or Blue. Multicolor is not a color. Carbon Black is a valid color."
+  },
+  "gender": {
+    "required": true,
+    "type": "accepts value, string",
+    "maxLength": 6,
+    "schemaOrg": "Product.audience.suggestedGender",
+    "description": "Accepts unisex, female or male as value. Required for apparel."
+  },
+  "material": {
+    "required": true,
+    "type": "string",
+    "maxLength": 200,
+    "schemaOrg": "",
+    "description": "Required if relevant for distinguishing products with same item_group_id."
+  },
+  "pattern": {
+    "required": true,
+    "type": "string",
+    "maxLength": 100,
+    "schemaOrg": "",
+    "description": "Optional for non-variant products. Only required for products in a set of variants, with same item_group_id. Striped, polka dot or paisley are valid values."
+  },
+  "size": {
+    "required": true,
+    "type": "accepts value, string",
+    "maxLength": 70,
+    "schemaOrg": "Product.size",
+    "description": "Optional for non-apparel products. Always include size_type and size_system for best result."
+  },
+  "size_system": {
+    "required": false,
+    "type": "accepts value, string",
+    "maxLength": 3,
+    "schemaOrg": "",
+    "description": "Accepts values such as US, UK, EU, DE, FR, JP, CN, IT, BR, MEX, AU. Defaults to target country. For apparel only."
+  },
+  "size_type": {
+    "required": false,
+    "type": "accepts value, string",
+    "maxLength": 12,
+    "schemaOrg": "",
+    "description": "Accepts values such as regular, maternity, big and tall, plus, petite. For apparel only."
+  },
+  "item_​​group_​​id": {
+    "required": true,
+    "type": "alphanumeric string",
+    "maxLength": 50,
+    "schemaOrg": "",
+    "description": "Use an item group ID for a set of products that differ by one or more of these attributes: color, size, pattern, material, age group, gender."
+  },
+  "custom_label_0": {
+    "required": false,
+    "type": "string",
+    "maxLength": 100,
+    "schemaOrg": "",
+    "description": "Use a value that will not be shown to users in your ads. Useful for seasonal, clearance, holiday, sale or other label to help you organize bidding and reporting. Max 1000 unique values."
+  },
+  "custom_label_1": {
+    "required": false,
+    "type": "string",
+    "maxLength": 100,
+    "schemaOrg": "",
+    "description": "Use a value that will not be shown to users in your ads. Useful for seasonal, clearance, holiday, sale or other label to help you organize bidding and reporting."
+  },
+  "custom_label_2": {
+    "required": false,
+    "type": "string",
+    "maxLength": 100,
+    "schemaOrg": "",
+    "description": "Use a value that will not be shown to users in your ads. Useful for seasonal, clearance, holiday, sale or other label to help you organize bidding and reporting."
+  },
+  "custom_label_3": {
+    "required": false,
+    "type": "string",
+    "maxLength": 100,
+    "schemaOrg": "",
+    "description": "Use a value that will not be shown to users in your ads. Useful for seasonal, clearance, holiday, sale or other label to help you organize bidding and reporting."
+  },
+  "custom_label_4": {
+    "required": false,
+    "type": "string",
+    "maxLength": 100,
+    "schemaOrg": "",
+    "description": "Use a value that will not be shown to users in your ads. Useful for seasonal, clearance, holiday, sale or other label to help you organize bidding and reporting."
+  },
+  "shipping": {
+    "required": true,
+    "type": "country-code:region/postal_code/location_id/location_group_name:service:price",
+    "maxLength": "",
+    "schemaOrg": "",
+    "description": "IMPORTANT NOTE: this attribute can be written with parenthesis with selected parameters, such as: shipping(country:postal_code:price). A valid value would be: US:30*:16.00 USD. Only price is required, so the attribute can be written as shipping(price) and only include the required value, price, as 10.00 USD."
+  },
+  "shipping_label": {
+    "required": false,
+    "type": "string",
+    "maxLength": "",
+    "schemaOrg": "",
+    "description": "IMPORTANT NOTE: this attribute can be written with parenthesis with selected parameters, such as: shipping(country:postal_code:price). A valid value would be: US:30*:16.00 USD. Only price is required, so the attribute can be written as shipping(price) and only include the required value, price, as 10.00 USD."
+  },
+  "shipping_weight": {
+    "required": false,
+    "type": "object, {\"value\":\"integer\", \"unit\":\"string\"}",
+    "maxLength": "",
+    "schemaOrg": "",
+    "description": "Set the shipping weight with number and unit. Unit must be g, kg or oz, lb."
+  }
+}

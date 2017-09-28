@@ -1,0 +1,87 @@
+<h1>{{title}}</h1>
+<p>User interface for searching available Google Shopping attributes.</p>
+<input autofocus type="search" name="q" placeholder="Attribute" value="{{query.q}}"/>
+<input type="search" name="w" placeholder="Key" value="{{query.w}}"/>
+<p>
+<h2>Attribute: <span class="capitalize">Title<span></h2>
+<table>
+<tr><th>Key</th><th>Value</th></tr>
+<tr><td>required</td><td>{{data.title.required}}</td></tr>
+<tr><td>type</td><td>{{data.title.type}}</td></tr>
+<tr><td>maxLength</td><td>{{data.title.maxLength}}</td></tr>
+<tr><td>schemaOrg</td><td>{{data.title.schemaOrg}}</td></tr>
+<tr><td>description</td><td>{{data.title.description}}</td></tr>
+</table>
+<p id="demo"></p>
+<input list="searchattr" id="searchinput">
+<datalist id="searchattr">
+{{#each data}}
+<option value="{{@key}}">
+{{/each}}
+</datalist>
+</p>
+<script>
+function onload() {
+  //console.log("Document loaded");
+var searchAttr = document.getElementById("searchinput");
+var listAttr = document.getElementById("searchattr").children;
+searchAttr.addEventListener("change", updateView);
+  function updateView() {
+    if (searchAttr.value.length >= 2) {
+      //console.log(searchAttr.value + " Value changed. Executing search.");
+      for (i = 0; i < listAttr.length; i++) {
+        if (searchAttr.value === listAttr[i].value) {
+          var theUrl = "/query/?q=" + listAttr[i].value;
+          httpGetAsync(theUrl,updateDemo);
+          //onMatch(listAttr[i].value)
+        }
+      }
+      console.log("Search completed.");
+    }
+  }
+  /*function onMatch(show) {
+    var theUrl = "/query/?q=" + show;
+    httpGetAsync(theUrl,updateDemo);
+  }*/
+  function httpGetAsync(theUrl, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            console.log("Recieved response.");
+            callback(xmlHttp.responseText);
+        }
+    xmlHttp.open("GET", theUrl, true);
+    xmlHttp.send(null);
+    }
+    function updateDemo(response) {
+      console.log("Updated data.");
+      var myObject = JSON.parse(response);
+      // What it is; the attribute title
+      //console.log(myObject["attribute"]);
+      console.log(myObject["keys"]["required"]);
+      document.getElementById("demo").innerHTML = response;
+    }
+    /*
+    fetch(url).then(r => r.json())
+    .then(data => console.log(data))
+    .catch(e => console.log("error"))
+    */
+}
+/*
+{
+   "attribute":"title",
+   "keys":{
+      "required":true,
+      "type":"string",
+      "maxLength":150,
+      "schemaOrg":"Product.name",
+      "description":"Accurately describe your product and match the product title from the product page (URL)."
+   }
+}
+*/
+/* ACCESS NESTED JSON OBJECTS BY DOT NOTATION OR BRACHET NOTATION
+x = myObj.cars.car2;
+or:
+x = myObj.cars["car2"]
+*/
+</script>

@@ -1,0 +1,1 @@
+exports.gsUpdater = require('./updater');
